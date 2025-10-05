@@ -40,3 +40,4 @@ DROP TABLE NomeTabela;
 -- RENOMEAR UMA TABELA
 
 sp_rename 'Nome_Atual_da_TAbela', 'Novo_Nome_da_Tabela';
+
