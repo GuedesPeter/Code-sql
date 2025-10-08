@@ -164,3 +164,14 @@ INSERT INTO LivroAutor(IdLivro, IdAutor) VALUES
 (138, 39),
 (139, 40);
 
+-- Consultando Livro e Autor
+
+SELECT 
+    NomeLivro,
+    NomeAutor,
+    SobrenomeAutor
+FROM Livro 
+INNER JOIN LivroAutor 
+    ON LivroAutor.IdLivro = Livro.IdLivro
+INNER JOIN Autor
+    ON Autor.IdAutor = LivroAutor.IdAutor;
