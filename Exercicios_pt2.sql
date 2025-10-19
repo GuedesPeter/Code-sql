@@ -120,30 +120,136 @@ SELECT
 FROM Autor
 WHERE IdAutor > 10;
 
--- [À FAZER]
-/* 
-Tabela: Editoras
-Mostre todas as editoras com nome contendo a palavra "Editora".
-Liste as editoras que não possuem a letra "e" no nome.
-Selecione as editoras cujo IdEditora está entre 5 e 10.
-Mostre as editoras com nome começando com "Companhia".
-Liste as editoras com NomeEditora diferente de "Moderna".*/
-
 
 /* 
-Tabela: Assuntos
-Exiba os assuntos com NomeAssunto igual a "Tecnologia".
-Liste todos os assuntos com nomes terminando com a letra "s".
-Filtre os assuntos cujo nome contém exatamente 10 caracteres.
-Mostre os assuntos com IdAssunto menor ou igual a 3.
-Liste os assuntos cujo nome não é "Literatura".*/
+Tabela: Editoras */
 
+-- 1.Mostre todas as editoras com nome contendo a palavra "Novatec".
+SELECT
+    NomeEditora
+FROM Editora
+WHERE NomeEditora like '%Novatec%';
+
+-- 2. Liste as editoras que não possuem a letra "A" no nome. 
+SELECT
+    NomeEditora
+FROM Editora
+WHERE NomeEditora NOT LIKE '%A%';
+
+-- 3.Selecione as editoras cujo IdEditora está entre 5 e 10.
+SELECT
+    IdEditora,
+    NomeEditora
+FROM Editora
+WHERE IdEditora > 5 AND IdEditora < 10;
+
+-- 4. Mostre as editoras com nome começando com "PRENTICE".
+SELECT 
+* 
+FROM Editora
+WHERE NomeEditora LIKE '%PRENTICE%';
+
+-- 5. Liste as editoras com NomeEditora diferente de "Prentice Hall".
+SELECT
+    NomeEditora
+FROM Editora
+WHERE NomeEditora != 'Prentice Hall'; -- <>
+
+
+/* 
+Tabela: Assuntos*/
+
+-- 1. Exiba os assuntos com NomeAssunto igual a "Matemática".
+SELECT
+    *
+FROM Assunto
+WHERE NomeAssunto LIKE '%Matemática%';
+
+-- 2.Liste todos os assuntos com nomes terminando com a letra "s".
+SELECT
+    NomeAssunto
+FROM Assunto
+WHERE NomeAssunto LIKE '%S';
+
+-- 3.Filtre os assuntos cujo nome contém exatamente 10 caracteres.
+SELECT 
+    NomeAssunto
+FROM Assunto
+WHERE len(NomeAssunto) = 10;
+
+-- 4.Mostre os assuntos com IdAssunto menor ou igual a 3.
+SELECT
+    IdAssunto,
+    NomeAssunto
+FROM Assunto
+WHERE IdAssunto <= 3;
+
+-- 5 .Liste os assuntos cujo nome não é "Científica".
+SELECT
+    NomeAssunto
+FROM Assunto
+WHERE NomeAssunto LIKE '%Científica%';
 
 /* 
 Tabela: LivroAutores
-Selecione os registros da tabela associativa onde o IdAutor é igual a 1.
-Mostre os registros com IdLivro maior que 20.
-Liste todos os pares de livro e autor com IdAutor diferente de 5.
-Filtre os registros onde o IdLivro esteja entre 10 e 15.
-Mostre os registros da tabela LivroAutores onde IdAutor não está entre 3 e 8.
 */
+
+-- 1.Selecione os registros da tabela associativa onde o IdAutor é igual a 10.
+SELECT
+    LA.IdAutor,
+    A.NomeAutor,
+    L.NomeLivro
+FROM LivroAutor LA
+INNER JOIN Livro L 
+ON L.IdLivro = LA.IdLivro
+INNER JOIN Autor A
+ON A.IdAutor = LA.IdAutor
+WHERE LA.IdAutor = 10;
+
+-- 2.Mostre os registros com IdLivro maior que 20.
+SELECT
+    LA.IdAutor,
+    A.NomeAutor,
+    L.NomeLivro
+FROM LivroAutor LA
+INNER JOIN Livro L 
+ON L.IdLivro = LA.IdLivro
+INNER JOIN Autor A
+ON A.IdAutor = LA.IdAutor
+WHERE LA.IdLivro > 20;
+
+-- 3.Liste todos os pares de livro e autor com IdAutor diferente de 5.
+SELECT
+    LA.IdAutor,
+    A.NomeAutor,
+    L.NomeLivro
+FROM LivroAutor LA
+INNER JOIN Livro L 
+ON L.IdLivro = LA.IdLivro
+INNER JOIN Autor A
+ON A.IdAutor = LA.IdAutor
+WHERE LA.IdAutor != 5;
+
+-- 4.Filtre os registros onde o IdLivro esteja entre 110 e 115.
+SELECT
+    LA.IdLivro,
+    A.NomeAutor,
+    L.NomeLivro
+FROM LivroAutor LA
+INNER JOIN Livro L 
+ON L.IdLivro = LA.IdLivro
+INNER JOIN Autor A
+ON A.IdAutor = LA.IdAutor
+WHERE LA.IdLivro BETWEEN 110 AND 115;
+
+-- 5. Mostre os registros da tabela LivroAutores onde IdAutor não está entre 103 e 108.
+SELECT
+    LA.IdLivro,
+    A.NomeAutor,
+    L.NomeLivro
+FROM LivroAutor LA
+INNER JOIN Livro L 
+    ON L.IdLivro = LA.IdLivro
+INNER JOIN Autor A
+    ON A.IdAutor = LA.IdAutor
+WHERE LA.IdLivro NOT BETWEEN 103 AND 108;
