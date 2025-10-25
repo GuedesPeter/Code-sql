@@ -319,3 +319,25 @@ SELECT
     NomeAssunto AS NOME,
     'Assunto' AS Tipo
 FROM Assunto;
+
+-- [À Realizar]
+
+/* 21. Liste todos os nomes de autores e livros publicados depois de 2020. */
+
+/* 22. Combine nomes de editoras e livros cujo preço seja maior que 50. */
+
+/* 23. Exiba nomes de autores e assuntos cujo nome contenha a letra 'a'. */
+
+/* 24. Liste autores e editoras ordenando o resultado em ordem decrescente pelo nome. */
+
+/* 25. Crie uma lista de nomes de autores, livros e editoras com uma coluna “Tipo” indicando a origem. */
+
+/* 26. Mostre todos os autores e livros cujos nomes começam com a letra 'J'. */
+
+/* 27. Liste nomes de editoras e assuntos, mantendo todas as duplicatas (UNION ALL). */
+
+/* 28. Combine autores e livros, exibindo o nome concatenado com o tipo entre parênteses. */
+
+/* 29. Liste todos os assuntos e livros com mais de 300 páginas em uma única coluna de nome. */
+
+/* 30. Combine todos os autores, editoras, livros e assuntos que contenham a letra 'e' em seu nome, mostrando também o tipo de origem. */
