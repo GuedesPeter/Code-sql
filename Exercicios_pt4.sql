@@ -324,20 +324,176 @@ FROM Assunto;
 
 /* 21. Liste todos os nomes de autores e livros publicados depois de 2020. */
 
+SELECT
+    CONCAT(NomeAutor,' ', SobrenomeAutor) AS NOME,
+    'Autor' AS Tipo
+FROM Autor
+
+UNION
+
+SELECT
+    CONCAT(NomeLivro,' : ', YEAR(DataPub)) AS NOME,
+    'Livro' AS Tipo
+FROM Livro
+WHERE YEAR(DataPub) > '2010';
+
 /* 22. Combine nomes de editoras e livros cujo preço seja maior que 50. */
+
+SELECT
+    NomeEditora AS NOME,
+    'Editora' AS Tipo
+FROM Editora
+
+UNION
+
+SELECT 
+    CONCAT(NomeLivro,' - Valor: R$',PrecoLivro) AS NOME,
+    'Livro' AS Tipo
+FROM Livro
+WHERE PrecoLivro > 50.00;
 
 /* 23. Exiba nomes de autores e assuntos cujo nome contenha a letra 'a'. */
 
+SELECT
+    CONCAT(NomeAutor,' ', SobrenomeAutor) AS NOME,
+    'Autor' AS Tipo
+FROM Autor
+WHERE NomeAutor LIKE 'A%'
+
+UNION
+
+SELECT 
+    NomeAssunto AS NOME,
+    'Assunto' AS Tipo
+FROM Assunto
+WHERE NomeAssunto LIKE 'A%';
+
+
 /* 24. Liste autores e editoras ordenando o resultado em ordem decrescente pelo nome. */
+
+SELECT
+    NomeEditora AS NOME,
+    'EDITORA' AS Tipo
+FROM Editora
+
+UNION
+
+SELECT 
+    CONCAT(NomeAutor,' ', SobrenomeAutor) AS NOME,
+    'Autor' AS Tipo
+FROM Autor
+
+ORDER BY NOME DESC;
+
 
 /* 25. Crie uma lista de nomes de autores, livros e editoras com uma coluna “Tipo” indicando a origem. */
 
+SELECT
+    NomeLivro AS NOME,
+    'LIVRO' AS Tipo
+FROM Livro
+
+UNION
+
+SELECT
+    CONCAT(NomeAutor,' ',SobrenomeAutor) AS NOME,
+    'AUTOR' AS Tipo
+FROM Autor
+
+UNION
+
+SELECT
+    NomeEditora AS NOME,
+    'EDITORA' AS TIPO
+FROM Editora;
+
+
 /* 26. Mostre todos os autores e livros cujos nomes começam com a letra 'J'. */
+
+SELECT
+    CONCAT(NomeAutor,' ', SobrenomeAutor) AS NOME,
+    'AUTOR' AS Tipo
+FROM Autor
+WHERE NomeAutor LIKE 'J%'
+
+UNION
+
+SELECT
+    NomeLivro AS NOME,
+    'LIVRO' AS Tipo
+FROM Livro
+WHERE NomeLivro LIKE 'J%';
 
 /* 27. Liste nomes de editoras e assuntos, mantendo todas as duplicatas (UNION ALL). */
 
+SELECT
+    NomeEditora AS NOME,
+    'EDITORA' AS Tipo
+FROM Editora
+
+UNION ALL
+
+SELECT
+    NomeAssunto AS NOME,
+    'ASSUNTO' AS Tipo
+FROM Assunto;
+
 /* 28. Combine autores e livros, exibindo o nome concatenado com o tipo entre parênteses. */
+
+SELECT
+    CONCAT(NomeAutor,' ', SobrenomeAutor, ' - Autor') AS NOME,
+    'AUTOR' AS Tipo
+FROM Autor  
+
+UNION
+
+SELECT
+    CONCAT(NomeLivro, ' - Livro') AS NOME,
+    'LIVRO' AS Tipo
+FROM Livro;
 
 /* 29. Liste todos os assuntos e livros com mais de 300 páginas em uma única coluna de nome. */
 
-/* 30. Combine todos os autores, editoras, livros e assuntos que contenham a letra 'e' em seu nome, mostrando também o tipo de origem. */
+SELECT
+    CONCAT(NomeAssunto,' - Categoria') AS NOME
+FROM Assunto
+
+UNION
+
+SELECT
+    CONCAT(NomeLivro,' - Pág:', NumeroPaginas) AS NOME
+FROM Livro
+WHERE NumeroPaginas > 300;
+
+
+/* 30. Combine editoras, livros e assuntos que contenham a letra 'e' em seu nome com autores que iniciem seu nome com a letra 'A' mostrando também o tipo de origem. */
+
+SELECT
+    NomeLivro AS NOME,
+    'Livro' AS Tipo
+FROM Livro
+WHERE NomeLivro LIKE 'E%'
+
+UNION
+
+SELECT
+    CONCAT(NomeAutor,' ',SobrenomeAutor) AS NOME,
+    'Autor' AS Tipo
+FROM Autor
+WHERE NomeAutor LIKE 'A%'
+
+UNION
+
+SELECT
+    NomeEditora AS NOME,
+    'Editora' AS Tipo
+FROM Editora
+WHERE NomeEditora LIKE 'E%'
+
+UNION
+
+SELECT
+    NomeAssunto AS NOME,
+    'Assunto' AS Tipo
+FROM Assunto
+WHERE NomeAssunto LIKE 'E%';
