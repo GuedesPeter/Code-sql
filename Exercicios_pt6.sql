@@ -115,20 +115,71 @@ WHERE NomeAutor LIKE '_A%';
 
 /* 16. Mostre os livros cujo nome contenha dois espaços (ex: títulos compostos). */
 
-/* 17. Encontre os livros cujo nome tenha a palavra 'Introdução' em qualquer posição. */
+SELECT
+   NomeLivro
+FROM Livro
+WHERE NomeLivro LIKE '% % %';
+
+/* 17. Encontre os livros cujo nome tenha a palavra 'Linux' em qualquer posição. */
+
+SELECT
+   NomeLivro
+FROM Livro
+WHERE NomeLivro LIKE '%Linux%';
 
 /* 18. Liste as editoras cujo nome não contenha a palavra 'Gráfica'. */
 
+SELECT
+   NomeEditora
+FROM Editora
+WHERE NomeEditora NOT LIKE '%Gráfica%';
+
 /* 19. Mostre os assuntos cujo nome contenha as letras 'ar' consecutivas. */
+
+SELECT
+   NomeAssunto
+FROM Assunto
+WHERE NomeAssunto LIKE '%ar%';
 
 /* 20. Liste os livros cujo nome comece com 'O ' e termine com ' de'. */
 
+SELECT 
+   NomeLivro
+FROM Livro
+WHERE NomeLivro LIKE 'O % de';
+
 /* 21. Encontre os autores cujo sobrenome não comece com as letras entre 'M' e 'Z'. */
 
-/* 22. Mostre os livros cujo ISBN13 contenha o número '2025'. */
+SELECT 
+   SobrenomeAutor
+FROM Autor
+WHERE SobrenomeAutor NOT LIKE '[M-Z]%';
+
+/* 22. Mostre os livros cujo ISBN13 contenha o número '20'. */
+
+SELECT
+   NomeLivro,
+   ISBN13
+FROM Livro
+WHERE ISBN13 LIKE '%20%';
 
 /* 23. Liste as editoras cujo nome tenha o caractere '&' (e comercial). */
 
+SELECT
+   NomeEditora
+FROM Editora
+WHERE NomeEditora LIKE '%&%';
+
 /* 24. Exiba os livros cujo nome contenha pelo menos um número. */
 
+SELECT
+   NomeLivro
+FROM Livro
+WHERE NomeLivro LIKE '%[0-9]%';
+
 /* 25. Mostre os livros cujo nome termine com um ponto de interrogação '?'. */
+
+SELECT
+   NomeLivro
+FROM Livro
+WHERE NomeLivro LIKE '%?';
