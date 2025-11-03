@@ -180,10 +180,50 @@ INNER JOIN Assunto AA ON AA.IdAssunto = L.IdAssunto
 ORDER BY L.DataPub;
 
 -- 18. Liste todos os autores que escreveram livros de um determinado assunto.
+
+SELECT
+    CONCAT(A.NomeAutor,' ',A.SobrenomeAutor) AS AUTOR,
+    AA.NomeAssunto AS ASSUNTO,
+    L.NomeLivro AS LIVRO
+FROM Autor A
+JOIN LivroAutor LA ON LA.IdAutor = A.IdAutor
+JOIN Livro L ON L.IdLivro = LA.IdLivro
+JOIN Assunto AA ON AA.IdAssunto = L.IdAssunto
+WHERE AA.NomeAssunto LIKE '%Tecnologia%';
+
+
 -- 19. Mostre o nome do livro, ISBN13 e o nome da editora.
+
+SELECT DISTINCT
+     L.NomeLivro,
+     L.ISBN13,
+     E.NomeEditora
+FROM Livro L 
+JOIN Editora E ON E.IdEditora = L.IdEditora
+ORDER BY L.ISBN13;
+
 -- 20. Liste o nome do livro, nome da editora e assunto.
 
+SELECT DISTINCT
+    L.NomeLivro,
+    E.NomeEditora,
+    A.NomeAssunto
+FROM Livro L 
+JOIN Editora E ON E.IdEditora = L.IdEditora
+JOIN Assunto A ON A.IdAssunto = L.IdAssunto;
+
 -- 21. Exiba o nome do autor e todos os livros que ele escreveu, incluindo a data de publicação.
+
+SELECT
+    CONCAT(A.NomeAutor,' ',A.SobrenomeAutor) AS AUTOR,
+    L.NomeLivro AS LIVRO,
+    FORMAT(L.DataPub,'dd/MM/yyyy') AS PUBLICACAO
+FROM Autor A 
+LEFT JOIN LivroAutor LA ON LA.IdAutor = A.IdAutor
+LEFT JOIN Livro L ON L.IdLivro = LA.IdLivro
+ORDER BY L.DataPub DESC;
+
+
 -- 22. Liste o nome do livro e o nome da editora, ordenando pelo nome da editora.
 -- 23. Mostre o nome do livro, número de páginas e o nome do autor.
 -- 24. Liste os livros com mais de 300 páginas e seus respectivos autores.
