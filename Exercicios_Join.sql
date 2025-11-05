@@ -225,22 +225,188 @@ ORDER BY L.DataPub DESC;
 
 
 -- 22. Liste o nome do livro e o nome da editora, ordenando pelo nome da editora.
+
+SELECT 
+    L.NomeLivro,
+    E.NomeEditora
+FROM Livro L 
+JOIN Editora E ON E.IdEditora = L.IdEditora
+ORDER BY E.NomeEditora;
+
+
 -- 23. Mostre o nome do livro, número de páginas e o nome do autor.
+
+SELECT 
+    L.NomeLivro,
+    L.NumeroPaginas,
+    CONCAT(A.NomeAutor,' ',A.SobrenomeAutor) AS Autor
+FROM Livro L 
+JOIN LivroAutor LA ON LA.IdLivro = L.IdLivro
+JOIN Autor A ON A.IdAutor = LA.IdAutor;
+
+
 -- 24. Liste os livros com mais de 300 páginas e seus respectivos autores.
+
+SELECT
+    L.NomeLivro,
+    L.NumeroPaginas,
+    CONCAT(A.NomeAutor,' ',A.SobrenomeAutor) AS Autor
+FROM LivroAutor LA
+JOIN Livro L ON L.IdLivro = LA.IdLivro
+JOIN Autor A ON A.IdAutor = LA.IdAutor
+WHERE L.NumeroPaginas > 300;
+
+
 -- 25. Exiba o nome da editora e os assuntos dos livros que ela publica.
+
+SELECT DISTINCT
+    E.NomeEditora,
+    A.NomeAssunto AS Assunto_Publicado
+FROM Editora E
+JOIN Livro L ON L.IdEditora = E.IdEditora
+JOIN Assunto A ON A.IdAssunto = L.IdAssunto
+ORDER BY E.NomeEditora;
+
+
 -- 26. Mostre o nome do livro, autor e assunto para livros de uma editora específica.
+
+SELECT 
+    L.NomeLivro AS LIVRO,
+    CONCAT(A.NomeAutor,' ',A.SobrenomeAutor) AS AUTOR,
+    AA.NomeAssunto AS ASSUNTO,
+    E.NomeEditora AS EDITORA
+FROM LivroAutor LA 
+JOIN Livro L ON L.IdLivro = LA.IdLivro
+JOIN Autor A ON A.IdAutor = LA.IdAutor
+JOIN Editora E ON E.IdEditora = L.IdEditora
+JOIN Assunto AA ON AA.IdAssunto = L.IdAssunto
+WHERE E.NomeEditora LIKE '%Apress%';
+
+
 -- 27. Liste o nome do livro, nome do autor e o ISBN13.
+
+SELECT 
+    L.NomeLivro,
+    CONCAT(A.NomeAutor,' ',A.SobrenomeAutor) AS Autor,
+    L.ISBN13
+FROM LivroAutor LA 
+JOIN Livro L ON L.IdLivro = LA.IdLivro
+JOIN Autor A ON A.IdAutor = LA.IdAutor
+ORDER BY L.ISBN13;
+
 -- 28. Exiba os autores que publicaram livros em mais de uma editora (sem agregação).
+
+SELECT DISTINCT 
+    CONCAT(a.NomeAutor, ' ', a.SobrenomeAutor) AS Autor
+FROM LivroAutor la1
+JOIN Livro l1 ON l1.IdLivro = la1.IdLivro
+JOIN Autor a ON a.IdAutor = la1.IdAutor
+JOIN LivroAutor la2 ON la2.IdAutor = a.IdAutor
+JOIN Livro l2 ON l2.IdLivro = la2.IdLivro
+WHERE l1.IdEditora <> l2.IdEditora;
+
+
 -- 29. Liste o nome do livro, autor e preço, apenas para livros com preço inferior a 100.
--- 30. Mostre o nome da editora e os livros publicados em 2024.
+
+SELECT 
+    L.NomeLivro AS LIVRO,
+    CONCAT(A.NomeAutor,' ',A.SobrenomeAutor) AS AUTOR,
+    CONCAT('R$ ',L.PrecoLivro) AS PREÇO
+FROM LivroAutor LA
+JOIN Autor A ON A.IdAutor = LA.IdAutor
+JOIN Livro L ON L.IdLivro = LA.IdLivro
+WHERE L.PrecoLivro < 100.00
+ORDER BY L.PrecoLivro;
+
+-- 30. Mostre o nome da editora e os livros publicados em 2010.
+
+SELECT
+    E.NomeEditora,
+    L.NomeLivro,
+    L.DataPub
+FROM Editora E 
+JOIN Livro L ON L.IdEditora = E.IdEditora
+WHERE YEAR(L.DataPub) = '2010';
 
 -- 31. Exiba o nome do livro, nome da editora e a data de publicação.
+
+SELECT
+    E.NomeEditora,
+    L.NomeLivro,
+    FORMAT(L.DataPub,'dd/MM/yyyy') AS DATA
+FROM Editora E 
+JOIN Livro L ON L.IdEditora = E.IdEditora
+ORDER BY L.DataPub DESC;
+
 -- 32. Liste o nome do livro, autor e o assunto, ordenados pelo nome do livro.
+
+SELECT
+    L.NomeLivro AS LIVRO,
+    CONCAT(A.NomeAutor,' ',A.SobrenomeAutor) AS AUTOR,
+    AA.NomeAssunto AS ASSUNTO
+FROM LivroAutor LA 
+JOIN Livro L ON L.IdLivro = LA.IdLivro
+JOIN Autor A ON A.IdAutor = LA.IdAutor
+JOIN Assunto AA ON AA.IdAssunto = L.IdAssunto
+ORDER BY L.NomeLivro DESC;
+
 -- 33. Mostre o nome do livro e o sobrenome do autor.
+
+SELECT DISTINCT
+    L.NomeLivro,
+    A.SobrenomeAutor
+FROM LivroAutor LA 
+JOIN Livro L ON L.IdLivro = LA.IdLivro
+JOIN Autor A ON A.IdAutor = LA.IdAutor
+ORDER BY A.SobrenomeAutor;
+
 -- 34. Liste os autores que possuem livros em um assunto específico.
+
+SELECT DISTINCT
+    CONCAT(A.NomeAutor,' ',A.SobrenomeAutor) AS AUTOR,
+    AA.NomeAssunto AS Assunto
+FROM LivroAutor LA 
+JOIN Livro L ON L.IdLivro = LA.IdLivro
+JOIN Autor A ON A.IdAutor = LA.IdAutor
+JOIN Assunto AA ON AA.IdAssunto = L.IdAssunto
+WHERE AA.NomeAssunto LIKE '%Matemática%';
+
+
 -- 35. Exiba o nome do livro e o nome do assunto, apenas para livros com ISBN13 não nulo.
+
+SELECT
+    L.NomeLivro,
+    A.NomeAssunto,
+    L.ISBN13
+FROM Livro L 
+JOIN Assunto A ON A.IdAssunto = L.IdAssunto
+WHERE L.ISBN13 IS NOT NULL
+ORDER BY L.ISBN13;
+
+
 -- 36. Mostre o nome do livro, número de páginas e o nome da editora.
+
+SELECT
+    L.NomeLivro,
+    L.NumeroPaginas,
+    E.NomeEditora
+FROM Livro L 
+JOIN Editora E ON E.IdEditora = L.IdEditora
+ORDER BY L.NomeLivro;
+
+
 -- 37. Liste o nome da editora e o total de livros que ela publicou (sem usar agregação).
+
+SELECT DISTINCT 
+    E.NomeEditora,
+    (SELECT COUNT(*) 
+     FROM Livro L2 
+     WHERE L2.IdEditora = E.IdEditora) AS Total_Publicado
+FROM Editora E
+JOIN Livro L ON L.IdEditora = E.IdEditora;
+
+
+
 -- 38. Exiba os autores e os assuntos de seus livros.
 -- 39. Liste o nome do livro, o assunto e o autor.
 -- 40. Mostre o nome da editora e os livros publicados antes de 2010.
