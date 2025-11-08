@@ -408,13 +408,83 @@ JOIN Livro L ON L.IdEditora = E.IdEditora;
 
 
 -- 38. Exiba os autores e os assuntos de seus livros.
+
+SELECT
+    CONCAT(A.NomeAutor, ' ',A.SobrenomeAutor) AS Autor,
+    AA.NomeAssunto,
+    L.NomeLivro
+FROM Autor A 
+JOIN LivroAutor LA ON LA.IdAutor = A.IdAutor
+JOIN Livro L ON L.IdLivro = LA.IdLivro
+JOIN Assunto AA ON AA.IdAssunto = L.IdAssunto
+ORDER BY AA.NomeAssunto;
+
+
 -- 39. Liste o nome do livro, o assunto e o autor.
+
+SELECT
+    L.NomeLivro,
+    AA.NomeAssunto,
+    CONCAT(A.NomeAutor, ' ',A.SobrenomeAutor) AS Autor
+FROM Autor A 
+JOIN LivroAutor LA ON LA.IdAutor = A.IdAutor
+JOIN Livro L ON L.IdLivro = LA.IdLivro
+JOIN Assunto AA ON AA.IdAssunto = L.IdAssunto
+ORDER BY Autor;
+
+
 -- 40. Mostre o nome da editora e os livros publicados antes de 2010.
 
+SELECT
+    E.NomeEditora,
+    L.NomeLivro
+FROM Editora E 
+JOIN Livro L ON L.IdEditora = E.IdEditora
+WHERE YEAR(L.DataPub) < '2010';
+
 -- 41. Exiba o nome do livro e o nome completo do autor.
+
+SELECT 
+    L.NomeLivro,
+    CONCAT(A.NomeAutor,' ',A.SobrenomeAutor) AS Autor
+FROM LivroAutor LA 
+JOIN Livro L ON L.IdLivro = LA.IdLivro
+JOIN Autor A ON A.IdAutor = LA.IdAutor
+ORDER BY Autor;
+
 -- 42. Liste o nome do autor e o nome da editora onde publicou.
+
+SELECT 
+    CONCAT(A.NomeAutor,' ',A.SobrenomeAutor) AS Autor,
+    E.NomeEditora
+FROM Autor A 
+JOIN LivroAutor LA ON LA.IdAutor = A.IdAutor
+JOIN Livro L ON L.IdLivro = LA.IdLivro
+JOIN Editora E ON E.IdEditora = L.IdEditora
+ORDER BY Autor;
+
 -- 43. Mostre o nome do livro, o preço e o nome da editora.
+
+SELECT
+    L.NomeLivro AS LIVRO,
+    CONCAT('R$ ',FORMAT(L.PrecoLivro,'N2','PT-BR')) AS PRECO,
+    E.NomeEditora AS EDITORA
+FROM Livro L 
+JOIN Editora E ON E.IdEditora = L.IdEditora
+ORDER BY EDITORA;
+
+
 -- 44. Liste os autores e os assuntos de livros que escreveram.
+
+SELECT 
+    CONCAT(A.NomeAutor,' ',A.SobrenomeAutor) AS AUTOR,
+    AA.NomeAssunto AS ASSUNTO
+FROM LivroAutor LA 
+JOIN Autor A ON LA.IdAutor = A.IdAutor
+JOIN Livro L ON L.IdLivro = LA.IdLivro
+JOIN Assunto AA ON AA.IdAssunto = L.IdAssunto
+ORDER BY ASSUNTO;
+
 -- 45. Exiba os livros e o nome da editora, apenas para livros com mais de 500 páginas.
 -- 46. Mostre o nome do autor, sobrenome e os livros escritos por ele.
 -- 47. Liste os livros e as editoras, apenas para assuntos de tecnologia.
