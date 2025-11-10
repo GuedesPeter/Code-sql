@@ -486,63 +486,64 @@ JOIN Assunto AA ON AA.IdAssunto = L.IdAssunto
 ORDER BY ASSUNTO;
 
 -- 45. Exiba os livros e o nome da editora, apenas para livros com mais de 500 páginas.
+
+SELECT 
+    L.NomeLivro,
+    E.NomeEditora
+FROM Editora E 
+JOIN Livro L ON L.IdEditora = E.IdEditora
+WHERE L.NumeroPaginas > 500
+ORDER BY L.NomeLivro ;
+
 -- 46. Mostre o nome do autor, sobrenome e os livros escritos por ele.
--- 47. Liste os livros e as editoras, apenas para assuntos de tecnologia.
+
+SELECT
+    CONCAT(A.NomeAutor,' ',A.SobrenomeAutor) AS Autor,
+    L.NomeLivro AS Livro
+FROM LivroAutor LA 
+JOIN Autor A ON A.IdAutor = LA.IdAutor
+JOIN Livro L ON L.IdLivro = LA.IdLivro
+ORDER BY Autor;
+
+-- 47. Liste os livros e as editoras, apenas para assuntos de Matematica.
+
+SELECT
+     L.NomeLivro,
+     E.NomeEditora
+FROM Livro L 
+JOIN Editora E ON E.IdEditora = L.IdLivro
+JOIN Assunto A ON A.IdAssunto = L.IdAssunto
+WHERE A.NomeAssunto LIKE '%Matematica%';
+
 -- 48. Exiba o nome do livro, autor e assunto de todos os livros cadastrados.
+
+SELECT
+    L.NomeLivro AS LIVRO,
+    CONCAT(A.NomeAutor,' ',A.SobrenomeAutor) AS AUTOR,
+    AA.NomeAssunto AS ASSUNTO
+FROM LivroAutor LA 
+JOIN Livro L ON L.IdLivro = LA.IdLivro
+JOIN Autor A ON A.IdAutor = LA.IdAutor
+JOIN Assunto AA ON AA.IdAssunto = L.IdAssunto;
+
+
 -- 49. Liste o nome da editora e o nome dos autores que publicaram por ela.
+
+SELECT 
+    E.NomeEditora,
+    CONCAT(A.NomeAutor,' ',A.SobrenomeAutor) AS AUTOR
+FROM LivroAutor LA 
+JOIN Autor A ON A.IdAutor = LA.IdAutor
+JOIN Livro L ON L.IdLivro = LA.IdLivro
+JOIN Editora E ON E.IdEditora = L.IdEditora;
+
+
 -- 50. Mostre o nome do livro, autor e data de publicação.
 
--- 51. Exiba o nome do autor e o nome dos livros ordenados por data de publicação.
--- 52. Liste o nome do livro, assunto e editora.
--- 53. Mostre o nome do livro, número de páginas e o assunto.
--- 54. Liste o nome do livro e o nome da editora, apenas para editoras com nome iniciado em 'A'.
--- 55. Exiba os livros e seus respectivos autores e editoras.
--- 56. Mostre o nome do livro e o nome do autor, apenas para livros de um determinado assunto.
--- 57. Liste os autores e os livros de um determinado ano de publicação.
--- 58. Exiba o nome do livro, o nome do autor e o assunto, apenas para livros com mais de 200 páginas.
--- 59. Mostre o nome da editora e os autores que publicaram livros de um mesmo assunto.
--- 60. Liste o nome do livro e a editora, apenas para livros com preço entre 100 e 200.
-
--- 61. Exiba o nome do livro, o autor e o número de páginas.
--- 62. Liste o nome do livro, a editora e o assunto, apenas para livros com ISBN13 iniciado em '978'.
--- 63. Mostre o nome do livro, autor e data de publicação em ordem decrescente.
--- 64. Liste o nome da editora e o nome do livro publicado por ela em 2023.
--- 65. Exiba o nome do livro, o assunto e o preço.
--- 66. Mostre o nome do autor, o livro e a editora correspondente.
--- 67. Liste o nome do livro e o assunto, apenas para livros de preço igual a 0.
--- 68. Exiba o nome do livro, a editora e o autor, apenas para livros com mais de um autor.
--- 69. Mostre o nome do autor e o nome dos livros de um determinado assunto.
--- 70. Liste o nome do livro, o assunto e a data de publicação.
-
--- 71. Exiba o nome do autor e todos os livros que ele escreveu com o nome da editora.
--- 72. Liste o nome do livro e o nome do autor, apenas para livros de um assunto específico.
--- 73. Mostre o nome da editora e o nome do livro, apenas para editoras que publicaram livros após 2015.
--- 74. Liste o nome do livro e o nome do assunto, apenas para assuntos relacionados à “Ciência”.
--- 75. Exiba o nome do autor e o nome dos livros com mais de 600 páginas.
--- 76. Mostre o nome do livro, a editora e o preço, apenas para livros com preço superior a 500.
--- 77. Liste o nome do livro e o nome do autor, ordenados por sobrenome do autor.
--- 78. Exiba o nome da editora e o nome dos assuntos de seus livros.
--- 79. Liste o nome do livro e o nome do autor, apenas para livros publicados em 2022.
--- 80. Mostre o nome do autor, o livro e o assunto, apenas para livros de preço abaixo de 100.
-
--- 81. Exiba o nome do livro e o nome da editora, apenas para livros com ISBN13 contendo “123”.
--- 82. Liste o nome do autor e o nome da editora, apenas para editoras com mais de um autor.
--- 83. Mostre o nome do livro e o nome do autor, apenas para autores com sobrenome “Silva”.
--- 84. Liste o nome do livro e o assunto, apenas para assuntos que começam com a letra “H”.
--- 85. Exiba o nome do autor, o livro e o assunto, apenas para livros com mais de 100 páginas.
--- 86. Mostre o nome do livro, o nome do autor e o preço, apenas para livros com autores diferentes.
--- 87. Liste o nome da editora e os livros com preço igual ao maior preço da tabela.
--- 88. Exiba o nome do livro, o nome da editora e o assunto, apenas para editoras com nome contendo “Editora”.
--- 89. Liste o nome do autor e o nome do livro, apenas para livros publicados entre 2010 e 2020.
--- 90. Mostre o nome do livro, o autor e o assunto, apenas para livros com título contendo “SQL”.
-
--- 91. Exiba o nome do livro e o nome do autor, apenas para livros com mais de 2 autores (use INNER JOIN).
--- 92. Liste o nome do livro e o nome da editora, apenas para livros cujo assunto é “Programação”.
--- 93. Mostre o nome do livro, o autor e o preço, ordenados por preço decrescente.
--- 94. Liste o nome do livro e o assunto, apenas para livros publicados no mês de janeiro.
--- 95. Exiba o nome do autor, o nome do livro e o número de páginas.
--- 96. Mostre o nome do livro, o assunto e o autor, apenas para livros publicados antes de 2000.
--- 97. Liste o nome da editora e os livros de autores com sobrenome iniciando por “A”.
--- 98. Exiba o nome do livro, o autor e o assunto, apenas para livros cujo nome do assunto contenha “Dados”.
--- 99. Liste o nome do livro e o nome do autor, apenas para livros sem ISBN13 nulo.
--- 100. Mostre o nome do livro, a editora e o assunto, apenas para livros de preço entre 10 e 50.
+SELECT 
+    L.NomeLivro,
+    CONCAT(A.NomeAutor,' ',A.SobrenomeAutor) AS Autor,
+    L.DataPub
+FROM LivroAutor LA 
+JOIN Autor A ON A.IdAutor = LA.IdAutor
+JOIN Livro L ON L.IdLivro = LA.IdLivro;
