@@ -56,3 +56,19 @@ GO
 
 SELECT Livro, Assunto 
 FROM vwLivroAssunto;
+
+
+-- ALTERANDO UMA VIEW
+
+ALTER VIEW vwLivroAssunto AS 
+    SELECT 
+    L.NomeLivro AS Livro,
+    L.ISBN13,
+    A.NomeAssunto AS Assunto
+    FROM Livro L
+    INNER JOIN Assunto A 
+    ON A.IdAssunto = L.IdAssunto;
+
+
+SELECT *
+FROM vwLivroAssunto;
