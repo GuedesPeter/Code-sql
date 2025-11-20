@@ -72,3 +72,9 @@ ALTER VIEW vwLivroAssunto AS
 
 SELECT *
 FROM vwLivroAssunto;
+
+
+
+-- EXCLUINDO UMA VIEW
+
+DROP VIEW vwLivroPreco;
