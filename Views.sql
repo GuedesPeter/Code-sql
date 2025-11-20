@@ -54,4 +54,5 @@ CREATE VIEW vwLivroAssunto AS
 GO
 
 
-SELECT * FROM vwLivroAssunto;
+SELECT Livro, Assunto 
+FROM vwLivroAssunto;
