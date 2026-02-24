@@ -213,8 +213,51 @@ ORDER BY NomeLivro;
 
 -- 17. Liste os livros cujo número de páginas seja maior que o número máximo de páginas dos livros de um determinado assunto.
 
+SELECT L.NomeLivro, L.NumeroPaginas, A.NomeAssunto
+FROM Livro L
+JOIN Assunto A
+ON A.IdAssunto = L.IdAssunto
+WHERE L.NumeroPaginas > (
+    SELECT MAX(L2.NumeroPaginas)
+    FROM Livro L2
+    JOIN Assunto A2 ON A2.IdAssunto = L2.IdAssunto
+    WHERE A2.NomeAssunto = 'Tecnologia'
+)
+ORDER BY L.NumeroPaginas;
+
 -- 18. Liste os nomes das editoras que possuem livros com preço acima da média.
+
+SELECT E.NomeEditora,
+       CONCAT('R$ ', L.PrecoLivro) AS Preco
+FROM Editora E
+JOIN Livro L ON L.IdEditora = E.IdEditora
+WHERE L.PrecoLivro > (
+    SELECT AVG(L2.PrecoLivro)
+    FROM Livro L2
+)
+ORDER BY L.PrecoLivro;
+
 
 -- 19. Liste os autores que participaram do livro mais caro.
 
+SELECT CONCAT(A.NomeAutor,' ',A.SobrenomeAutor)
+FROM Autor A
+JOIN LivroAutor LA ON LA.IdAutor = A.IdAutor
+JOIN Livro L ON L.IdLivro = LA.IdLivro
+WHERE L.PrecoLivro = (
+    SELECT MAX(L2.PrecoLivro)
+    FROM Livro L2
+);
+
+
+
 -- 20. Liste os livros que possuem autores associados.
+
+SELECT DISTINCT L.NomeLivro
+FROM Livro L
+WHERE EXISTS (
+    SELECT 1
+    FROM LivroAutor LA
+    WHERE LA.IdLivro = L.IdLivro
+);
+
