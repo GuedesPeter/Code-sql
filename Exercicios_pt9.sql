@@ -6,57 +6,6 @@ EXERCÍCIOS – CRIAÇÃO DE STORED PROCEDURES
 Baseado nas tabelas: Autor, Editora, Assunto, Livro e LivroAutor
 ===========================================================
 
-11) Criar uma procedure chamada sp_AtualizarPrecoLivro que:
-    - Receba IdLivro e NovoPreco.
-    - Atualize o preço do livro.
-
-12) Criar uma procedure chamada sp_AtualizarDataPublicacao que:
-    - Receba IdLivro e NovaData.
-    - Atualize a DataPub.
-
-13) Criar uma procedure chamada sp_AtualizarNomeEditora que:
-    - Receba IdEditora e NovoNome.
-    - Atualize o nome da editora.
-
-14) Criar uma procedure chamada sp_AtualizarNomeAutor que:
-    - Receba IdAutor, NovoNome e NovoSobrenome.
-    - Atualize os dados do autor.
-
-15) Criar uma procedure chamada sp_ExcluirAutor que:
-    - Receba IdAutor.
-    - Exclua o autor.
-    - Trate erro caso esteja vinculado a algum livro.
-
-16) Criar uma procedure chamada sp_ExcluirLivro que:
-    - Receba IdLivro.
-    - Exclua o livro informado.
-
-17) Criar uma procedure chamada sp_ExcluirEditora que:
-    - Receba IdEditora.
-    - Exclua a editora (considerando ON DELETE CASCADE).
-
-18) Criar uma procedure chamada sp_InserirLivroComValidacao que:
-    - Receba os dados do livro.
-    - Verifique se o ISBN já existe.
-    - Verifique se o preço é maior ou igual a zero.
-    - Retorne mensagem de sucesso ou erro.
-
-19) Criar uma procedure chamada sp_ListarLivrosPorFaixaDePreco que:
-    - Receba PrecoMin e PrecoMax.
-    - Liste os livros dentro da faixa informada.
-
-20) Criar uma procedure chamada sp_RelatorioCompletoLivro que:
-    - Receba IdLivro.
-    - Retorne:
-        * NomeLivro
-        * ISBN13
-        * NomeEditora
-        * NomeAssunto
-        * Nome e Sobrenome dos autores
-        * PrecoLivro
-        * NumeroPaginas
-    - Utilize JOIN entre Livro, Editora, Assunto, LivroAutor e Autor.
-
 */
 
 --1) Criar uma procedure chamada sp_InserirAutor que:
@@ -230,3 +179,95 @@ END
 GO
 
 EXEC sp_BuscarLivroPorISBN '9780000000005';
+
+
+--11) Criar uma procedure chamada sp_AtualizarPrecoLivro que:
+--    - Receba IdLivro e NovoPreco.
+--    - Atualize o preço do livro.
+
+CREATE PROCEDURE sp_AtualizarPrecoLivro(
+    @IdLivro SMALLINT,
+    @NovoPreco MONEY
+)
+AS
+BEGIN
+    UPDATE Livro
+    SET PrecoLivro = @NovoPreco
+    WHERE IdLivro = @IdLivro;
+END
+GO
+
+EXEC sp_AtualizarPrecoLivro 10, 50.00;
+
+
+--12) Criar uma procedure chamada sp_AtualizarDataPublicacao que:
+--    - Receba IdLivro e NovaData.
+--    - Atualize a DataPub.
+
+CREATE PROCEDURE sp_AtualizarDataPublicacao(
+    @IdLivro SMALLINT,
+    @NovaData DATE
+)
+AS
+BEGIN
+    UPDATE Livro
+    SET DataPub = @NovaData
+    WHERE IdLivro = @IdLivro;
+END
+GO
+
+EXEC sp_AtualizarDataPublicacao 4, '2026-01-20';
+
+--13) Criar uma procedure chamada sp_AtualizarNomeEditora que:
+    -- Receba IdEditora e NovoNome.
+    -- Atualize o nome da editora.
+
+CREATE PROCEDURE sp_AtualizarNomeEditora(
+    @IdEditora SMALLINT,
+    @NovoNome VARCHAR(50)
+)
+AS
+BEGIN
+    UPDATE Editora
+    SET NomeEditora = @NovoNome
+    WHERE IdEditora = @IdEditora;
+END
+GO
+
+EXEC sp_AtualizarNomeEditora 4, '[NOVO NOME]';
+
+--14) Criar uma procedure chamada sp_AtualizarNomeAutor que:
+    -- Receba IdAutor, NovoNome e NovoSobrenome.
+    -- Atualize os dados do autor.
+
+CREATE PROCEDURE sp_AtualizarNomeAutor(
+    @IdAutor SMALLINT,
+    @NovoNome VARCHAR(50),
+    @NovoSobrenome VARCHAR(50)
+)
+AS
+BEGIN
+    UPDATE Autor
+    SET NomeAutor = @NovoNome, SobrenomeAutor = @NovoSobrenome
+    WHERE IdAutor = @IdAutor;
+END
+GO
+
+EXEC sp_AtualizarNomeAutor 5, 'NOME', 'SOBRENOME';
+
+--15) Criar uma procedure chamada sp_ExcluirLivro que:
+    -- Receba IdLivro.
+    -- Exclua o livro informado.
+
+
+CREATE PROCEDURE sp_ExcluirLivro(
+    @IdLivro TINYINT
+)
+AS
+BEGIN
+    DELETE FROM Livro
+    WHERE IdLivro = @IdLivro;
+END
+GO
+
+EXEC sp_ExcluirLivro 15;
